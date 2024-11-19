@@ -1,7 +1,7 @@
 import { challengeMission } from "../services/mission.service.js";
 
 export const handleChallengeMission = async (req, res) => {
-  console.log("handleChallengeMission called"); // 함수가 호출되었는지 확인
+  console.log("handleChallengeMission called"); 
   const { missionId } = req.params;
   const { userId } = req.body;
 

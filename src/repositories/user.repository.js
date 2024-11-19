@@ -6,8 +6,8 @@ export const addUser = async (data) => {
 
   try {
     const [confirm] = await conn.query(
-      `SELECT COUNT(1) AS isExistEmail FROM user WHERE email = ?;`, // 바인딩 쿼리
-      [data.email] // 데이터 바인딩
+      `SELECT COUNT(1) AS isExistEmail FROM user WHERE email = ?;`, //바인딩 쿼리
+      [data.email] //데이터 바인딩
     );
     
 

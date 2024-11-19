@@ -1,13 +1,13 @@
-// src/controllers/review.controller.js
+//src/controllers/review.controller.js
 import { createReview } from "../repositories/review.repository.js";
 import { createReviewDto } from "../dtos/review.dto.js";
 
-// 리뷰 생성 핸들러
+//리뷰 생성 핸들러
 export const handleCreateReview = async (req, res) => {
   try {
-    const reviewData = createReviewDto(req.body);  // DTO 사용하여 데이터 처리
+    const reviewData = createReviewDto(req.body);  
 
-    // 리뷰 생성
+    //리뷰 생성
     const review = await createReview(reviewData);
     return res.status(201).json({ message: "리뷰가 성공적으로 생성되었습니다.", review });
   } catch (error) {

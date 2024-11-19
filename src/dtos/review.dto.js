@@ -1,9 +1,8 @@
 // src/dtos/review.dto.js
 
-export const createReviewDto = (body) => {
+export const createReviewDto = (body) => {                  //함수는 클라이언트에서 전달받은 요청 데이터를 가공하여 리뷰 데이터를 생성하는 함수
     const { storeId, userId, reviewText, score } = body;
   
-    // DTO 구조 생성 및 유효성 검사
     if (!storeId || !userId || !reviewText || !score) {
       throw new Error("storeId, userId, reviewText, score는 필수 항목입니다.");
     }

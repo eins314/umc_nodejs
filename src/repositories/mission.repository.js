@@ -4,18 +4,18 @@ import { pool } from "../db.config.js";
 
 export const addMissionChallenge = async (missionId, userId) => {
   try {
-    // 이미 도전 중인 미션이 있는지 확인
+    //이미 도전 중인 미션이 있는지 확인
     const [existingChallenge] = await pool.query(
       'SELECT * FROM user_mission WHERE mission_id = ? AND user_id = ? AND status = 1',
       [missionId, userId]
     );
 
-    // 이미 도전 중인 미션이 있으면 false 반환
+    //이미 도전 중인 미션이 있으면 false 반환
     if (existingChallenge.length > 0) {
       return false;
     }
 
-    // 도전 상태로 미션 추가 (status = 1: 실행 중)
+    //도전 상태로 미션 추가 (status = 1: 실행 중)
     await pool.query(
       'INSERT INTO user_mission (mission_id, user_id, status) VALUES (?, ?, 1)',
       [missionId, userId]
