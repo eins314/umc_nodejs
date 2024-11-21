@@ -1,7 +1,41 @@
 // src/repositories/mission.repository.js
 
-import { pool } from "../db.config.js";
+import { prisma } from "../db.config.js";
 
+export const addMissionChallenge = async(missionId, userId)=>{
+  try{
+    const existingChallenge = await prisma.userMission.findFirst({
+      where: {
+        mission_id: missionId,
+        user_id: userId,
+        status: 1,
+      },
+    });
+    if(existingChallenge){
+      return false;
+    }
+
+    await prisma.userMission.create({
+      data:{
+        mission_id:missionId,
+        user_id:userId,
+        status:1,
+      },
+    });
+
+    return true;
+  } catch(error){
+    console.error("미션 도전 처리 중 오류 발생:",error);
+    throw new Error("미션 처리 실패");
+  }
+}
+
+
+
+
+
+
+/*
 export const addMissionChallenge = async (missionId, userId) => {
   try {
     //이미 도전 중인 미션이 있는지 확인
@@ -26,4 +60,4 @@ export const addMissionChallenge = async (missionId, userId) => {
     console.error('미션 도전 처리 중 오류 발생:', error);
     throw new Error('미션 도전 처리 실패');
   }
-};
+};*/

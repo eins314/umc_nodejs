@@ -28,3 +28,11 @@ export class ChallengeMissionRequest {
     }
   }
   
+  export class MissionResponseDto {
+    constructor(mission) {
+      this.id = mission.id;
+      this.missionName = mission.mission_name;
+      this.description = mission.description;
+      this.rewardPoint = mission.rewardpoint;
+    }
+  }

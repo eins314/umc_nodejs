@@ -1,6 +1,71 @@
 // src/repositories/review.repository.js
-import { pool } from "../db.config.js";
+// src/repositories/review.repository.js
+import { prisma } from "../db.config.js";
 
+export const createReview = async({ store_id, user_id, review, score }) => {
+  try {
+    console.log("Inserting review:", { store_id, user_id, review, score });
+
+    const result = await prisma.review.create({
+      data: {
+        review,
+        score,
+        created_at: new Date(),
+        // user를 연결 (user_id를 기준으로 기존 사용자 연결)
+        user: {
+          connect: { id: user_id }  // user_id에 해당하는 사용자 연결
+        },
+        // store를 연결 (store_id를 기준으로 기존 store 연결)
+        store: {
+          connect: { id: store_id }  // store_id에 해당하는 가게 연결
+        }
+      },
+    });
+
+    console.log("Insert result:", result);
+    return result;
+  } catch (error) {
+    console.error("Database error:", error);
+    throw new Error("리뷰 생성 중 오류가 발생 했습니다.");
+  }
+}
+
+export const getReviewById = async (req, res) => {
+  try {
+    const reviewId = parseInt(req.params.reviewId); // URL 파라미터에서 reviewId 추출
+    if (isNaN(reviewId)) {
+      return res.status(400).json({ error: "유효하지 않은 리뷰 ID입니다." });
+    }
+
+    const review = await prisma.review.findUnique({
+      where: { id: reviewId },
+      include: {
+        user: true, // 리뷰 작성자 정보 포함
+        store: true // 리뷰와 연결된 가게 정보 포함
+      }
+    });
+
+    if (!review) {
+      return res.status(404).json({ error: "리뷰를 찾을 수 없습니다." });
+    }
+
+    res.status(200).json(review); // 성공적으로 리뷰 반환
+  } catch (error) {
+    console.error("리뷰 조회 중 오류:", error);
+    res.status(500).json({ error: "리뷰 조회 중 오류가 발생했습니다." });
+  }
+};
+
+
+
+
+
+
+
+
+
+
+/*
 export const createReview = async ({ store_id, user_id, review, score }) => {
     try {
       console.log("Inserting review:", { store_id, user_id, review, score });  // 로그로 확인
@@ -22,4 +87,4 @@ export const createReview = async ({ store_id, user_id, review, score }) => {
       throw new Error("리뷰 생성 중 오류가 발생했습니다.");
     }
   };
-  
+  */
