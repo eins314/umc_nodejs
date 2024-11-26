@@ -1,4 +1,7 @@
 import { pool } from "../db.config.js";
+import { updateMissionStatus } from "../repositories/mission.repository.js"; // Repository 함수
+import { UpdateMissionStatusDto } from "../dtos/mission.repository.js"; // DTO 가져오기
+import {ReviewAddError} from "../errors.js"
 
 //미션 도전 상태로 업데이트하는 함수
 export const challengeMission = async (missionId, userId) => {
@@ -10,7 +13,7 @@ export const challengeMission = async (missionId, userId) => {
     );
 
     if (existingChallenge.length > 0) {
-      throw new Error("이미 도전 중인 미션입니다.");
+      throw new ReviewAddError ("이미 도전 중인 미션입니다.",missionId);
     }
 
     // 미션 상태를 "실행중(1)"으로 업데이트
@@ -21,14 +24,12 @@ export const challengeMission = async (missionId, userId) => {
 
     return result; 
   } catch (error) {
-    console.error("미션 도전 중 오류:", error);
-    throw error; 
+    throw new ReviewAddError("미션 도전 변경 중 오류",missionId); 
   }
 };
 
 // src/services/mission.service.js
-import { updateMissionStatus } from "../repositories/mission.repository.js"; // Repository 함수
-import { UpdateMissionStatusDto } from "../dtos/mission.repository.js"; // DTO 가져오기
+
 
 export const updateMissionStatusService = async (userId, missionId, status) => {
   // 상태 DTO로 유효성 검사

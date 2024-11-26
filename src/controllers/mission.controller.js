@@ -1,5 +1,8 @@
 import { challengeMission } from "../services/mission.service.js";
 import { updateMissionStatus } from "../repositories/mission.repository.js"; // Repository 함수 가져오기
+import { StatusCodes } from "http-status-codes";
+import { updateMissionStatusService } from "../services/mission.service.js"; // 서비스 함수 가져오기
+
 
 
 export const handleChallengeMission = async (req, res) => {
@@ -9,15 +12,16 @@ export const handleChallengeMission = async (req, res) => {
 
   try {
     const result = await challengeMission(missionId, userId);
-    res.status(200).json({ message: "Mission challenge started.", result });
+    return res.status(StatusCodes.OK).success(result);
   } catch (error) {
-    console.error("Error in handleChallengeMission:", error);
-    res.status(500).json({ error: error.message || "Mission challenge failed." });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).error({
+      errorCode:"CANT_CHANGE_CHALLENGE",
+      reason:"미션을 도전으로 바꾸는 중 문제가 발생했습니다.",
+    });
   }
 };
 
 // src/controllers/mission.controller.js
-import { updateMissionStatusService } from "../services/mission.service.js"; // 서비스 함수 가져오기
 
 export const handleUpdateMissionStatus = async (req, res) => {
   try {

@@ -1,4 +1,6 @@
 import { responseFromUser } from "../dtos/user.dto.js";
+import { DuplicateUserEmailError } from "../errors.js";
+import {UserServiceError} from "../errors.js";
 
 import {
   addUser,
@@ -36,7 +38,7 @@ export const userSignUp = async (data) => {
   });
 
   if (joinUserId === null) {
-    throw new Error("이미 존재하는 이메일입니다.");
+    throw new DuplicateUserEmailError("이미 존재하는 이메일입니다.",data);
   }
 
 
@@ -51,6 +53,6 @@ export const getUserDetailsService = async (userId) => {
     const user = await getUserById(userId);
     return user;
   } catch (error) {
-    throw new Error(`서비스에서 오류 발생: ${error.message}`);
+    throw new UserServiceError(`서비스에서 오류 발생",`,data);
   }
 };

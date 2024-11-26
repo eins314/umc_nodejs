@@ -17,6 +17,7 @@ export const getUserMissionsByStatus = async (userId, status) => {
   }
 };*/
 
+import { StatusCodes } from 'http-status-codes';
 import { getActiveUserMissions } from '../services/userMission.service.js';
 
 export const getUserMissions = async (req, res) => {
@@ -24,14 +25,27 @@ export const getUserMissions = async (req, res) => {
 
   // userId가 없으면 에러 처리
   if (!userId) {
-    return res.status(400).json({ error: 'userId is required' });
+    return res.status(StatusCodes.BAD_REQUEST).error({ 
+      errorCode: "NOT_EXIST_USERID",
+      reason:'존재하는 유저 아이디가 없습니다.', 
+    });
   }
 
   try {
-    const userMissions = await getActiveUserMissions(userId);  // 서비스 함수 호출
-    return res.json(userMissions);  // 결과를 JSON으로 반환
+    const userMissions = await getActiveUserMissions(userId);  
+
+    if(userMissions.length===0){
+      return res.status(StatusCodes.NOT_FOUND).error({
+        errorCode:"NOT_ACTIVE_MISSIONS",
+        reason:"활성화된 미션이 없습니다.",
+      });
+    }
+
+    return res.status(StatusCodes.OK).success(userMissions);  
   } catch (error) {
-    console.error('Controller Error:', error);
-    return res.status(500).json({ error: 'Service Error: ' + error.message });
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).error({ 
+      errorCode: 'SERVICE_ERROR',
+      reason:"유저의 도전중 미션 조회 중 에러발생",
+    });
   }
 };

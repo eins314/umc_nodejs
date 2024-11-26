@@ -19,6 +19,22 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
+app.use((req, res, next)=>{
+  res.success = (success)=>{
+    return res.json({ resultType: "success",error:null,success});
+  };
+
+  res.error = ({errorCode="unknown",reason=null,data = null})=>{
+    return res.json({
+      resultType: "fail",
+      error:{errorCode,reason,data},
+      success: null,
+    });
+  };
+  next();
+});
+
+
 app.use(cors());                            
 app.use(express.static('public'));          
 app.use(express.json());                    
@@ -33,11 +49,24 @@ app.post("/reviews/add", handleCreateReview);
 app.post("/missions/:missionId/challenge",handleChallengeMission);
 app.get("/stores/:storeId/reviews", handleListStoreReviews);
 app.post("/stores/add", handleCreateStore);
-app.get("/stores/:storeId/reviews", handleListStoreReviews);
 app.get("/users/:userId/reviews", getReviewById);
 app.get("/stores/:storeId/missions", getMissionById);
 app.get("/usermission/:userId/challenge",getUserMissions);
 //app.patch("usermission/:userId/:missionId/status")
+
+
+
+app.use((err,req,res,next)=>{
+  if(res.headersSent){
+    return next(err);
+  }
+
+  res.status(err.statusCode || 500).error({
+    errorCode: err.errorCode || "unknown",
+    reason: err.reason || err.message || null,
+    data: err.data || null,
+  });
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
