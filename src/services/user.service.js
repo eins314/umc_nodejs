@@ -1,4 +1,5 @@
 import { responseFromUser } from "../dtos/user.dto.js";
+
 import {
   addUser,
   getUser,
@@ -7,6 +8,9 @@ import {
 } from "../repositories/user.repository.js";
 
 import mysql from 'mysql2';
+
+
+
 
 
 export const userSignUp = async (data) => {
@@ -39,4 +43,14 @@ export const userSignUp = async (data) => {
   const user = await getUser(joinUserId);
   
   return responseFromUser({ user});
+};
+
+
+export const getUserDetailsService = async (userId) => {
+  try {
+    const user = await getUserById(userId);
+    return user;
+  } catch (error) {
+    throw new Error(`서비스에서 오류 발생: ${error.message}`);
+  }
 };
