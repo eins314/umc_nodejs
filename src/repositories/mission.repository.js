@@ -30,9 +30,22 @@ export const addMissionChallenge = async(missionId, userId)=>{
   }
 }
 
-
-
-
+export const updateMissionStatus = async (userId, missionId, status) => {
+  try {
+    return await prisma.mission.updateMany({
+      where: {
+        id: missionId,
+        userId: userId,  // userId가 일치하는 미션을 찾아서 업데이트
+      },
+      data: {
+        status,  // 미션 상태 업데이트
+      },
+    });
+  } catch (error) {
+    console.error("미션 상태 업데이트 중 오류:", error);
+    throw new Error("미션 상태 업데이트 중 오류가 발생했습니다.");
+  }
+};
 
 
 /*

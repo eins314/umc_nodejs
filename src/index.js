@@ -37,7 +37,7 @@ app.get("/stores/:storeId/reviews", handleListStoreReviews);
 app.get("/users/:userId/reviews", getReviewById);
 app.get("/stores/:storeId/missions", getMissionById);
 app.get("/usermission/:userId/challenge",getUserMissions);
-
+//app.patch("usermission/:userId/:missionId/status")
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)

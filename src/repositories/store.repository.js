@@ -55,20 +55,17 @@ export const listStoreReviews = async (storeId,cursor=0)=>{
 
 export const getMissionsByStoreId = async (storeId) => {
   try {
-    // storeId를 통해 해당 store와 관련된 미션들을 찾아오기
     const store = await prisma.store.findUnique({
-      where: { id: storeId },  // storeId 필드를 id로 변경
+      where: { id: storeId },  
       include: {
-        missions: true,  // Store와 연결된 모든 미션을 포함하여 가져옴
+        missions: true,  
       },
     });
 
-    // store가 없거나 관련 미션이 없는 경우
     if (!store || store.missions.length === 0) {
       throw new Error("해당 가게의 미션을 찾을 수 없습니다.");
     }
 
-    // 관련된 미션들 반환
     return store.missions;
   } catch (error) {
     console.error("가게 미션 조회 중 오류:", error);

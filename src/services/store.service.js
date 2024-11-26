@@ -1,6 +1,5 @@
 import { getStoreById } from "../repositories/store.repository.js";
-import { getMissionsByStoreId } from "../repositories/store.repository.js"; // repository에서 미션 가져오기
-
+import { getMissionsByStoreId } from "../repositories/store.repository.js"; 
 
 const checkStoreExists = async (storeId) => {
   const store = await getStoreById(storeId);

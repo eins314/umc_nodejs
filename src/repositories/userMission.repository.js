@@ -1,5 +1,5 @@
 import { prisma } from '../db.config.js';
-import { UserMissionDTO } from '../dtos/userMission.dto.js'; // DTO import 추가
+import { UserMissionDTO } from '../dtos/userMission.dto.js'; 
 
 
 
@@ -12,7 +12,7 @@ export const getUserMissionsByStatus = async (userId, status) => {
           status: status,
         },
         include: {
-          mission: true, // 미션 정보 포함
+          mission: true, 
         }
       });
       

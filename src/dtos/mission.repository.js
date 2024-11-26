@@ -36,3 +36,16 @@ export class ChallengeMissionRequest {
       this.rewardPoint = mission.rewardpoint;
     }
   }
+
+// src/dtos/updateMissionStatus.dto.js
+export class UpdateMissionStatusDto {
+  constructor(status) {
+    this.status = status;
+  }
+
+  validate() {
+    if (![0,1, 2].includes(this.status)) {
+      throw new Error("유효하지 않은 상태값");
+    }
+  }
+}

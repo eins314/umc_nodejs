@@ -43,32 +43,3 @@ export const getReviewById = async (req,res)=>{
   };
 
 
-  export const getMissionById = async (req,res)=>{
-    try{
-      const userId=parseInt(req.params.userId);
-  
-      if(isNaN(userId)){
-        return res.status(400).json({error:"유효하지 않은 유저 ID"});
-        }
-       
-      const mission = await prisma.review.findMany({
-        where: {userId},
-        include:{
-          user:true,
-          store:true,
-        },
-      });
-  
-      if(!mission){
-        return res.status(404).json({error:"유저리뷰가 없음"});
-      }
-  
-    
-  
-      return res.status(200).json(mission);
-      
-      }catch(error){
-        console.error("미션 조회중 오류:",error);
-        return res.status(500).json({error:"미션 조회중 오류가 발생했습니다."});
-      }
-    };  

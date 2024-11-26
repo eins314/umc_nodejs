@@ -30,31 +30,6 @@ export const createReview = async({ store_id, user_id, review, score }) => {
   }
 }
 
-export const getReviewById = async (req, res) => {
-  try {
-    const reviewId = parseInt(req.params.reviewId); // URL 파라미터에서 reviewId 추출
-    if (isNaN(reviewId)) {
-      return res.status(400).json({ error: "유효하지 않은 리뷰 ID입니다." });
-    }
-
-    const review = await prisma.review.findUnique({
-      where: { id: reviewId },
-      include: {
-        user: true, // 리뷰 작성자 정보 포함
-        store: true // 리뷰와 연결된 가게 정보 포함
-      }
-    });
-
-    if (!review) {
-      return res.status(404).json({ error: "리뷰를 찾을 수 없습니다." });
-    }
-
-    res.status(200).json(review); // 성공적으로 리뷰 반환
-  } catch (error) {
-    console.error("리뷰 조회 중 오류:", error);
-    res.status(500).json({ error: "리뷰 조회 중 오류가 발생했습니다." });
-  }
-};
 
 
 
