@@ -19,3 +19,13 @@ export class UserMissionDTO {
     }
   }
   
+export const validateUpdateUserMissionStatusDTO = (body) => {
+    const { status,userId,missionId } = body;
+  
+    if (![0, 1, 2].includes(status)) {
+      throw new Error("Invalid status value. Allowed values are 0, 1, or 2.");
+    }
+  
+    return { status,userId,missionId };
+};
+  

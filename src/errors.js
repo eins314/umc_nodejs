@@ -48,3 +48,11 @@ export class GetUserChallengeError extends Error{
         this.data=data;
     }
 }
+
+export class ChangeToCompleteError extends Error{
+    constructor(reason,data){
+        super(reason);
+        this.reason=reason;
+        this.data=data;
+    }
+}

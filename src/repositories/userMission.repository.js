@@ -21,4 +21,16 @@ export const getUserMissionsByStatus = async (userId, status) => {
       console.error('Detailed error:', error);
       throw new Error('Error fetching missions from the database: ' + error.message);
     }
-  };
+};
+
+export const updateUserMissionStatusInDB = async (userId, missionId, status) => {
+  return await prisma.user_mission.updateMany({
+    where: {
+      userId: Number(userId),
+      missionId: Number(missionId),
+    },
+    data: {
+      status: Number(status),
+    },
+  });
+};

@@ -49,3 +49,22 @@ export const getUserMissions = async (req, res) => {
     });
   }
 };
+
+import { validateUpdateUserMissionStatusDTO } from "../dtos/userMission.dto.js";
+import { updateUserMissionStatus } from "../services/userMission.service.js";
+
+export const updateUserMissionStatusHandler = async (req, res) => {
+  try {
+    const { userId, missionId } = req.params;
+    const { status } = validateUpdateUserMissionStatusDTO(req.body);
+
+    const result = await updateUserMissionStatus(userId, missionId, status);
+
+    res.status(StatusCodes.OK).success(result);
+  } catch (error) {
+    res.status(StatusCodes.INTERNAL_SERVER_ERROR).error({ 
+      errorCode: "CANT_CHANGE_STATUS",
+      reason:"진행완료로 바꾸는 도중 오류발생",
+    });
+  }
+};
