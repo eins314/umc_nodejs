@@ -10,6 +10,77 @@ export const handleUserSignUp = async (req, res, next) => {
 
   const user = await userSignUp(bodyToUser(req.body));
   res.status(StatusCodes.OK).success(user);
+
+    /*
+      #swagger.summary = '회원 가입 API';
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                email: { type: "string" },
+                name: { type: "string" },
+                gender: { type: "string" },
+                birth: { type: "string", format: "date" },
+                address: { type: "string" },
+                detailAddress: { type: "string" },
+                phoneNumber: { type: "string" },
+                preferences: { type: "array", items: { type: "number" } }
+              }
+            }
+          }
+        }
+      };
+      #swagger.responses[200] = {
+        description: "회원 가입 성공 응답",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                resultType: { type: "string", example: "SUCCESS" },
+                error: { type: "object", nullable: true, example: null },
+                success: {
+                  type: "object",
+                  properties: {
+                    email: { type: "string" },
+                    name: { type: "string" },
+                    preferCategory: { type: "array", items: { type: "string" } }
+                  }
+                }
+              }
+            }
+          }
+        }
+      };
+      #swagger.responses[400] = {
+        description: "회원 가입 실패 응답",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                resultType: { type: "string", example: "FAIL" },
+                error: {
+                  type: "object",
+                  properties: {
+                    errorCode: { type: "string", example: "U001" },
+                    reason: { type: "string" },
+                    data: { type: "object" }
+                  }
+                },
+                success: { type: "object", nullable: true, example: null }
+              }
+            }
+          }
+        }
+      };
+    */
+   
+
+
 };
 
 export const getReviewById = async (req,res)=>{
@@ -20,7 +91,6 @@ export const getReviewById = async (req,res)=>{
         return res.status(StatusCodes.BAD_REQUEST).error({
           errorCode:"INVALID_USER_ID",
           reason:"유효하지 않은 유저 ID",
-
           });
         }
       
@@ -48,6 +118,76 @@ export const getReviewById = async (req,res)=>{
         reason:"리뷰 조회중 오류가 발생했습니다.",
       });
     }
+
+    /*
+      #swagger.summary = '리뷰 조회 API';
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                name: { type: "string" },
+                "createdAt": { "type": "string", "format": "date-time"}
+                review: {type: "string"},
+                userId: {type: "integer"},
+                storeId: {type: "integer"},
+                score: {type: "number",format:float}
+              }
+            }
+          }
+        }
+      };
+      #swagger.responses[200] = {
+        description: "리뷰 조회 성공 응답",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                resultType: { type: "string", example: "SUCCESS" },
+                error: { type: "object", nullable: true, example: null },
+                success: {
+                  type: "object",
+                  "properties": {
+                  "reviewId": { "type": "integer" },
+                  "userId": { "type": "integer" },
+                  "storeId": { "type": "integer" },
+                  "score": { "type": "number", "format": "float" },
+                  "review": { "type": "string" },
+                  "createdAt": { "type": "string", "format": "date-time" }
+                }
+                }
+              }
+            }
+          }
+        }
+      };
+      #swagger.responses[400] = {
+        description: "리뷰 조회 실패 응답",
+        content: {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "resultType": { "type": "string", "example": "FAIL" },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "errorCode": { "type": "string", "example": "R001" },
+                    "reason": { "type": "string", "example": "유효하지 않은 데이터입니다." },
+                    "data": { "type": "object", "nullable": true }
+                  }
+                },
+                "success": { "type": "object", "nullable": true, "example": null }
+              }
+            }
+          }
+        }
+      };
+    */
+
   };
 
 

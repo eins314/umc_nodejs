@@ -7,12 +7,47 @@ import { INTERNAL_SERVER_ERROR, StatusCodes } from "http-status-codes";
 
 
 export const handleListStoreReviews = async (req, res, next) => {
-    const reviews = await listStoreReviews(
-      parseInt(req.params.storeId),
-      typeof req.query.cursor === "string" ? parseInt(req.query.cursor) : 0
-    );
-    res.status(200).json({success:true,reviews});
+  /*
+    #swagger.summary = '상점 리뷰 목록 조회 API';
+    #swagger.responses[200] = {
+      description: "상점 리뷰 목록 조회 성공 응답",
+      content: {
+        "application/json": {
+          schema: {
+            type: "object",
+            properties: {
+              resultType: { type: "string", example: "SUCCESS" },
+              error: { type: "object", nullable: true, example: null },
+              success: {
+                type: "object",
+                properties: {
+                  data: {
+                    type: "array",
+                    items: {
+                      type: "object",
+                      properties: {
+                        id: { type: "number" },
+                        store: { type: "object", properties: { id: { type: "number" }, name: { type: "string" } } },
+                        user: { type: "object", properties: { id: { type: "number" }, email: { type: "string" }, name: { type: "string" } } },
+                        content: { type: "string" }
+                      }
+                    }
+                  },
+                  pagination: { type: "object", properties: { cursor: { type: "number", nullable: true } }}
+                }
+              }
+            }
+          }
+        }
+      };
+    */
+  const reviews = await listStoreReviews(
+    parseInt(req.params.storeId),
+    typeof req.query.cursor === "string" ? parseInt(req.query.cursor) : 0
+  );
+  res.status(200).json({ success: true, reviews });
 };
+
 
 
 export const handleCreateStore = async (req, res, next) => {
@@ -94,4 +129,64 @@ export const getReviewById = async (req,res)=>{
         reason: "미션 조회 중 오류가 발생했습니다.",
        });
     }
+
+    /*
+  #swagger.summary = '가게 미션 조회 API';
+  #swagger.parameters['storeId'] = {
+    in: 'path',
+    required: true,
+    description: '조회할 가게의 ID',
+    schema: { type: 'integer', example: 1 }
   };
+  #swagger.responses[200] = {
+    description: "가게 미션 조회 성공 응답",
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            resultType: { type: "string", example: "SUCCESS" },
+            error: { type: "object", nullable: true, example: null },
+            success: {
+              type: "object",
+              properties: {
+                mission_name: { type: "string" },
+                description: { type: "string" },
+                rewardpoint: { type: "integer" },
+                storeId: { type: "integer" }
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+  #swagger.responses[400] = {
+    description: "가게 미션 조회 실패 응답",
+    content: {
+      "application/json": {
+        schema: {
+          type: "object",
+          properties: {
+            resultType: { type: "string", example: "FAIL" },
+            error: {
+              type: "object",
+              properties: {
+                reason: { type: "string", example: "유효하지 않은 가게 ID" },
+                details: { type: "string", nullable: true, example: null }
+              }
+            },
+            success: { type: "object", nullable: true, example: null }
+          }
+        }
+      }
+    }
+  };
+*/
+
+
+
+
+  };
+
+

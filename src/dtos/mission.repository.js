@@ -1,6 +1,5 @@
 // src/dtos/mission.dto.js
 
-// 미션 도전 요청 DTO
 export class ChallengeMissionRequest {
     constructor(userId) {
       this.userId = userId;
@@ -11,7 +10,6 @@ export class ChallengeMissionRequest {
     }
   }
   
-  // 미션 도전 응답 DTO
   export class ChallengeMissionResponse {
     constructor(missionId, status, message) {
       this.missionId = missionId;

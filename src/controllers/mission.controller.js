@@ -19,6 +19,69 @@ export const handleChallengeMission = async (req, res) => {
       reason:"미션을 도전으로 바꾸는 중 문제가 발생했습니다.",
     });
   }
+
+  /*
+      #swagger.summary = '도전중으로 변경 API';
+      #swagger.requestBody = {
+        required: true,
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                userId: {type: "integer"}
+              }
+            }
+          }
+        }
+      };
+      #swagger.responses[200] = {
+        description: "도전중으로 변경 성공 응답",
+        content: {
+          "application/json": {
+            schema: {
+              type: "object",
+              properties: {
+                resultType: { type: "string", example: "SUCCESS" },
+                error: { type: "object", nullable: true, example: null },
+                success: {
+                  type: "object",
+                  "properties": {
+                  "userId": { "type": "integer" },
+                }
+                }
+              }
+            }
+          }
+        }
+      };
+      #swagger.responses[400] = {
+        description: "도전중으로 변경 실패 응답",
+        content: {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "resultType": { "type": "string", "example": "FAIL" },
+                "error": {
+                  "type": "object",
+                  "properties": {
+                    "errorCode": { "type": "string", "example": "R001" },
+                    "reason": { "type": "string", "example": "유효하지 않은 유저아이디입니다." },
+                    "data": { "type": "object", "nullable": true }
+                  }
+                },
+                "success": { "type": "object", "nullable": true, "example": null }
+              }
+            }
+          }
+        }
+      };
+    */
+
+
+
+
 };
 
 // src/controllers/mission.controller.js

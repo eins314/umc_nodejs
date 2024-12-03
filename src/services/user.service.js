@@ -16,8 +16,8 @@ import mysql from 'mysql2';
 
 
 export const userSignUp = async (data) => {
-  console.log("Received data:", data); // 전체 data 로그 확인
-  console.log("Email field:", data.email); // email 필드만 로그 확인
+  //console.log("Received data:", data); // 전체 data 로그 확인
+  //console.log("Email field:", data.email); // email 필드만 로그 확인
 
 
   if (!data.email) {

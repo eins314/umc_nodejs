@@ -8,7 +8,7 @@ export const addReview = async (data) => {
   //가게 존재 여부 확인
   const storeExists = await checkStoreExists(storeId);
   if (!storeExists) {
-    throw new ReviewAddError("존재하지 않는 가게입니다.");
+    throw new ReviewAddError("존재하지 않는 가게입니다.",data);
   }
 
   //리뷰 추가 
